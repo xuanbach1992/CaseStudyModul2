@@ -6,7 +6,14 @@
             @csrf
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control
+                    @if($errors->has('name'))
+                    border-danger
+                    @endif
+" name="name">
+                @if($errors->has('name'))
+                    <p class="text-danger">*{{$errors->first('name')}}</p>
+                @endif
             </div>
             <div class="form-group">
                 <label>Email</label>
@@ -20,16 +27,16 @@
                 <label>Image</label>
                 <input type="file" name="image">
             </div>
-{{--            <div class="form-group">--}}
-{{--                <select name="group">--}}
-{{--                    <option value="">Khong trong group nao</option>--}}
-{{--                    @foreach($groups as $group)--}}
-{{--                        <option--}}
-{{--                            value="{{$group->id}}">{{$group->name}}--}}
-{{--                        </option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-{{--            </div>--}}
+            {{--            <div class="form-group">--}}
+            {{--                <select name="group">--}}
+            {{--                    <option value="">Khong trong group nao</option>--}}
+            {{--                    @foreach($groups as $group)--}}
+            {{--                        <option--}}
+            {{--                            value="{{$group->id}}">{{$group->name}}--}}
+            {{--                        </option>--}}
+            {{--                    @endforeach--}}
+            {{--                </select>--}}
+            {{--            </div>--}}
             <div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>

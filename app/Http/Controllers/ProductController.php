@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\FormAddRequest;
+use App\Product;
 use App\Service\ProductServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
@@ -33,7 +35,7 @@ class ProductController extends Controller
     }
 
     public
-    function createSuccess(Request $request)
+    function createSuccess(FormAddRequest $request)
     {
         if (Gate::allows("admin")) {
             $this->productService->success($request);
@@ -73,5 +75,10 @@ class ProductController extends Controller
         abort(403, "ban ko co quyen han nay");
     }
 
-
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $products = Product::where('name', "LIKE", "%$search%")->paginate(15);
+        return view("product.list", compact("products"));
+    }
 }
